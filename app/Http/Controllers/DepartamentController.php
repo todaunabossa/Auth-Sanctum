@@ -66,4 +66,19 @@ class DepartamentController extends Controller
                 'message' => 'Departament deleted sucessfully!',
         ],200);
     }
+
+    public function EmployeesByDepartment(){
+    $employees = Employee::select(DB::raw('count(employees.id) as count'), 'departments.name')
+        ->join('departments', 'departments.id', '=', 'employees.department_id')
+        ->groupBy('departments.name')
+        ->get();
+    return response()->json($employees);
+}
+
+    public function all(){
+        $employees = Employee::select('employeesdepartament_id')
+        ->join('departments', 'departments.id', '=', 'employees.department_id')
+        ->get();
+        return response()->json($employees);
+    }
 }
