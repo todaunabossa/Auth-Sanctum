@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Departament;
+use App\Models\Department;
 use Illuminate\Http\Request;
 
-class DepartamentController extends Controller
+class DepartmentController extends Controller
 {
     public function index()
     {
-        $departaments = Departament::all();
-        return response()->json($departaments);
+        $departments = Department::all();
+        return response()->json($departments);
     }
 
     public function store(Request $request)
@@ -24,23 +24,23 @@ class DepartamentController extends Controller
                 'errors' => $validator->errors()->all(),
             ],400);
         }
-        $departament = new Departament($request->input());
-        $departament ->save();
+        $department = new Departament($request->input());
+        $department ->save();
 
             return response()->json([
                 'status' => true,
-                'message' => 'Departament created sucessfully!',
+                'message' => 'Department created sucessfully!',
             ],200);
     }
 
 
-    public function show(Departament $departament)
+    public function show(Department $department)
     {
-        return response()->json(['status' => true, 'data' => $departament]);
+        return response()->json(['status' => true, 'data' => $department]);
 
     }
 
-    public function update(Request $request, Departament $departament)
+    public function update(Request $request, Departament $department)
     {
         $rules = ['name' => 'required|string|min:1|max:100'];
         $validator = \Validator::make($request->all(), $rules);
@@ -51,24 +51,24 @@ class DepartamentController extends Controller
                 'errors' => $validator->errors()->all(),
             ],400);
         }
-            $departament ->update($request->input());
+            $department ->update($request->input());
             return response()->json([
                 'status' => true,
-                'message' => 'Departament updated sucessfully!',
+                'message' => 'Department updated sucessfully!',
         ],200);
     }
 
-    public function destroy(Departament $departament)
+    public function destroy(Department $department)
     {
         $departament ->delete();
             return response()->json([
                 'status' => true,
-                'message' => 'Departament deleted sucessfully!',
+                'message' => 'Department deleted sucessfully!',
         ],200);
     }
 
     public function EmployeesByDepartment(){
-    $employees = Employee::select(DB::raw('count(employees.id) as count'), 'departments.name')
+    $employees = Employee::select(DB::raw('count(employees.id) as count, departments.name')) 
         ->join('departments', 'departments.id', '=', 'employees.department_id')
         ->groupBy('departments.name')
         ->get();
@@ -76,7 +76,7 @@ class DepartamentController extends Controller
 }
 
     public function all(){
-        $employees = Employee::select('employeesdepartament_id')
+        $employees = Employee::select('employeesdepartment_id')
         ->join('departments', 'departments.id', '=', 'employees.department_id')
         ->get();
         return response()->json($employees);
