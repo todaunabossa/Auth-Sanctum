@@ -29,17 +29,17 @@ class AuthController extends Controller
 
         return response()->json([
             'status'=> true,
-            'msg'=> 'User created successfully!',
+            'message'=> 'User created successfully!',
             'token' => $user -> createToken('Api Token')->plainTextToken
         ],201);
     }
     
-    public function login(){
+    public function login(Request $request){
         $rules = [
             'email' => 'required|string|email|max:100',
             'password' => 'required|string',  
         ];
-        $validator = \Validator::make($request->input(), $rules);
+        $validator = \Validator::make($request->input(),$rules);
         if($validator->fails()){
             return response()->json([
                 'status'=> false,
@@ -55,7 +55,7 @@ class AuthController extends Controller
         $user = User::where('email',$request->email)->fisrt();
         return response()->json([
             'status'=> true,
-            'msg'=> 'User logged in successfully!',
+            'message'=> 'User logged in successfully!',
             'data' => $user,
             'token' => $user -> createToken('Api Token')->plainTextToken
         ],201);
@@ -65,7 +65,7 @@ class AuthController extends Controller
         auth()->user()->tokens()->delete();
         return response()->json([
             'status'=> true,
-            'msg'=> 'User logged out successfully!',
+            'message'=> 'User logged out successfully!',
         ],201);
     }
 }
