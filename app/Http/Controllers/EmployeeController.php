@@ -36,7 +36,7 @@ class EmployeeController extends Controller
         return response()->json([
             'status'=> false,
             'message' => 'Employee created successfully'
-        ],200);
+        ],201);
     }
 
     public function show(Employee $employee)
@@ -63,7 +63,7 @@ class EmployeeController extends Controller
         return response()->json([
             'status' => true,
             'message' => 'Employee updated successfuly'
-        ],200);
+        ],2001);
     }
 
     public function destroy(Employee $employee)

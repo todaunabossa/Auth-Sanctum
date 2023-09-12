@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('employees', function (Blueprint $table) {
             $table->id();
             $table->string('name', 100);
-            $table->varchar('email', 80);
+            $table->string('email', 80);
             $table->string('phone', 15);
             $table->foreignId('departament_id')
             ->constrained('departments')->onUpdate('cascade')
